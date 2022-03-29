@@ -5,6 +5,15 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+
+        
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+     <!-- Custom styles for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="blog.css" rel="stylesheet">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -14,6 +23,40 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="container">
+            <header class="blog-header py-3">
+                <div class="row flex-nowrap justify-content-between align-items-center">
+                <div class="col-4 pt-1">
+                    <a class="link-secondary" href="/register">Inscription</a>
+                </div>
+                <div class="col-4 d-flex justify-content-end align-items-center">
+                    <a class="link-secondary" href="#" aria-label="Search">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
+                    </a>
+                    <a class="btn btn-sm btn-outline-secondary" href="/login">Connexion</a>
+                </div>
+                </div>
+            </header>
+
+            <div class="nav-scroller py-1 mb-2">
+                <nav class="nav d-flex justify-content-between">
+                <a class="p-2 link-secondary" href="{{path('app_default')}}">Accueil</a>
+                <a class="p-2 link-secondary" href="{{path('gites')}}">Nos gites</a>
+                <p class="p-2 link-secondary">Reservation <button class="btn btn-outline-success" disabled>Soon</button></p>
+                <a class="p-2 link-secondary" href="{{path('about_us')}}">Qui sommes nous </a>
+                </nav>
+            </div>
+            </div>
+
+            <main class="container">
+                <div class="p-4 p-md-5 mb-3" style="background-image: url('https://www.lamaisoninnovante.fr/wp-content/files/2020/06/La-maison-innovante-maisons-Projet01_finaleV3_HD.jpg'); height:200px; background-position: center;">
+                </div>
+                {% block body %}{% endblock %}
+            </main>
+        </div>
+
+        <footer class="blog-footer">
+        <hr>
+        </footer>
     </body>
 </html>

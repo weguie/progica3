@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Progica{% endblock %}
+
+{% block body %}
+<h1>Nos gîtes</h1>
+<div class="row mb-2">
+	{% for gite in gites %}
+		<div class="col-md-6">
+			<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+				<div class="col p-4 d-flex flex-column position-static">
+					<strong class="d-inline-block mb-2 text-success">{{gite.localisation}}</strong>
+					<h3 class="mb-0">{{gite.name}}</h3>
+					<div class="mb-1 text-muted">{{gite.disponibility}}</div>
+					<p class="mb-auto">{{gite.description}}</p>
+					<a href="{{path('show_house', {'id': gite.id})}}" class="stretched-link">See more</a>
+				</div>
+				<div class="col-auto d-none d-lg-block">
+					<img src="{{gite.image}}" alt="" style="width:200px; height:250px">
+				</div>
+			</div>
+		</div>
+
+                {% endfor %} 
+{% endblock %}
