@@ -14,11 +14,11 @@ class DefaultController extends AbstractController
     public function index(ManagerRegistry $doctrine): Response
     {
         $gite = $doctrine->getRepository(Gite::class)->findOneBy(['id' => rand(110, 118)]);
-        // $giteRand = $doctrine->getRepository(Gite::class)->findOneBy(['id' => rand(21, 30)]);
+        $giteRand = $doctrine->getRepository(Gite::class)->findOneBy(['id' => rand(109, 118)]);
 
         return $this->render('default/index.html.twig', [
-            'gite' => $gite
-            // 'giteRand' => $giteRand
+            'gite' => $gite,
+            'giteRand' => $giteRand
         ]);
     }
 
@@ -31,7 +31,7 @@ class DefaultController extends AbstractController
     #[Route('/gites', name: 'gites')]
     public function showAll(ManagerRegistry $doctrine): Response
     {
-        $repo = $doctrine->getRepository(Progica::class);
+        $repo = $doctrine->getRepository(Gite::class);
 
         $gites = $repo->findAll();
         return $this->render('default/gites.html.twig', [
@@ -42,15 +42,31 @@ class DefaultController extends AbstractController
     #[Route('/apropos', name: 'about_us')]
     public function aboutUs(): Response
     {
-        return $this->render('default/apropos.html.twig', [
+        return $this->render('default/apropos.html.twig');
+    }
+
+    #[Route('/create', name: 'create')]
+    public function create(): Response
+    {
+        $gite = new Gite();
+
+        $form = $this->createFormBuilder($gite)
+                    ->add('');
+
+
+
+        return $this->render('login/create.html.twig', [
             'controller_name' => 'DefaultController',
         ]);
     }
 
+
+
     #[Route('/show/{id}', name: 'show_house')]
-    public function show(ManagerRegistry $doctrine,int $id): Response
+    public function show(ManagerRegistry $doctrine, int $id): Response
     {
         $gite = $doctrine->getRepository(Gite::class)->find($id);
+        $dispo = $doctrine->getRepository(Gite::class)->find($id);
 
         return $this->render('default/show.html.twig', [
             'gite' => $gite,
