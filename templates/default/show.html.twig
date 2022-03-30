@@ -3,6 +3,7 @@
 {% block title %}Progica{% endblock %}
 
 {% block body %}
+
                 <div class="col-md-12">
                     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                         <div class="col p-4 d-flex flex-column position-static">
@@ -14,6 +15,7 @@
                             <p>Description : {{gite.description}}</p>
                             <p>Contact : {{user.firstName}} {{user.lastName}}</p>
                             <p>Numéro de contact : {{user.phone}}</p>
+                            <p>Animaux autorisés : {{answer}}</p>
                             </div>
                         <div class="col-auto d-none d-lg-block">
                         <img src="{{gite.image}}" alt="" style="width:200px; height:250px">

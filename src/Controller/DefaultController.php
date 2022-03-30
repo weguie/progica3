@@ -55,7 +55,9 @@ class DefaultController extends AbstractController
         $gite = new Gite();
 
         $form = $this->createFormBuilder($gite)
-                    ->add('Title');
+                    ->add('Title')
+                    ->add('Description')
+                    ->getForm();
 
 
 
@@ -72,12 +74,18 @@ class DefaultController extends AbstractController
     {
         $gite = $doctrine->getRepository(Gite::class)->find($id);
         $user = $gite->getUser();
+        $pets = $gite->getIsAllowed();
 
-        var_dump($user);
+        if ($pets == '1') {
+            $answer = "Oui";
+        } else {
+            $answer = "Non";
+        }
 
         return $this->render('default/show.html.twig', [
             'gite' => $gite,
-            'user' => $user
+            'user' => $user,
+            'answer' => $answer 
         ]);
     }
 }
