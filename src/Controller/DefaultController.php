@@ -59,9 +59,6 @@ class DefaultController extends AbstractController
                     ->add('Description')
                     ->getForm();
 
-
-
-
         return $this->render('login/create.html.twig', [
             'controller_name' => 'DefaultController',
         ]);
