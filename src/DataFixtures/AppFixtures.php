@@ -23,7 +23,7 @@ class AppFixtures extends Fixture
 
             $user = new Utilisateur();
             $user->setEmail('test'.$i.'@test.com')
-                  ->setPassword('test')
+                  ->setPassword(rand(1000,1000000))
                   ->setRoles(['ROLE_USER'])
                   ->setFirstName($faker->firstName())
                   ->setLastName($faker->lastName())
@@ -34,9 +34,9 @@ class AppFixtures extends Fixture
             $gite->setTitle($faker->firstName())
                 ->setDescription($faker->realText())
                 ->setUser($user)
-                ->setImage('https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg')
+                ->setImage('https://storage.googleapis.com/epc-photos/photo_b6f6f01d-f5bb-4d72-a270-607bb878029c.png')
                 ->setIsAllowed(rand(0, 1))
-                ->setIsAllwoedPrice('10')
+                ->setIsAllwoedPrice(rand(1 , 30))
                 ->setPrice(rand(100, 2000))
                 ->setLocation($faker->city())
                 ->setBed(rand(0, 10))

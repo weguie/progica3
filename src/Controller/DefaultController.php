@@ -20,8 +20,8 @@ class DefaultController extends AbstractController
     #[Route('/', name: 'app_default')]
     public function index(ManagerRegistry $doctrine): Response
     {
-        $gite = $doctrine->getRepository(Gite::class)->findOneBy(['id' => rand(119, 128)]);
-        $giteRand = $doctrine->getRepository(Gite::class)->findOneBy(['id' => rand(119, 128)]);
+        $gite = $doctrine->getRepository(Gite::class)->findOneBy(['id' => rand(146, 155)]);
+        $giteRand = $doctrine->getRepository(Gite::class)->findOneBy(['id' => rand(146, 155)]);
 
         return $this->render('default/index.html.twig', [
             'gite' => $gite,
