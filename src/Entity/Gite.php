@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Gite
  *
- * @ORM\Table(name="gite", uniqueConstraints={@ORM\UniqueConstraint(name="id_location", columns={"location"})}, indexes={@ORM\Index(name="contact_id", columns={"contact_id"})})
+ * @ORM\Table(name="gite", uniqueConstraints={@ORM\UniqueConstraint(name="user_id", columns={"user_id"}), @ORM\UniqueConstraint(name="id_location", columns={"location"})})
  * @ORM\Entity
  */
 class Gite
@@ -50,9 +50,9 @@ class Gite
     private $isAllowed;
 
     /**
-     * @var int
+     * @var int|null
      *
-     * @ORM\Column(name="is_allwoed_price", type="integer", nullable=false)
+     * @ORM\Column(name="is_allwoed_price", type="integer", nullable=true)
      */
     private $isAllwoedPrice;
 
@@ -85,14 +85,14 @@ class Gite
     private $room;
 
     /**
-     * @var \InformationContact
+     * @var \Utilisateur
      *
-     * @ORM\ManyToOne(targetEntity="InformationContact")
+     * @ORM\ManyToOne(targetEntity="Utilisateur")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="contact_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
      */
-    private $contact;
+    private $user;
 
     public function getId(): ?int
     {
@@ -152,7 +152,7 @@ class Gite
         return $this->isAllwoedPrice;
     }
 
-    public function setIsAllwoedPrice(int $isAllwoedPrice): self
+    public function setIsAllwoedPrice(?int $isAllwoedPrice): self
     {
         $this->isAllwoedPrice = $isAllwoedPrice;
 
@@ -207,14 +207,14 @@ class Gite
         return $this;
     }
 
-    public function getContact(): ?InformationContact
+    public function getUser(): ?Utilisateur
     {
-        return $this->contact;
+        return $this->user;
     }
 
-    public function setContact(?InformationContact $contact): self
+    public function setUser(?Utilisateur $user): self
     {
-        $this->contact = $contact;
+        $this->user = $user;
 
         return $this;
     }

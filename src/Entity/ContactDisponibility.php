@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ContactDisponibility
  *
- * @ORM\Table(name="contact_disponibility", uniqueConstraints={@ORM\UniqueConstraint(name="contact_id", columns={"contact_id"})})
+ * @ORM\Table(name="contact_disponibility", uniqueConstraints={@ORM\UniqueConstraint(name="user_id", columns={"user_id"})})
  * @ORM\Entity
  */
 class ContactDisponibility
@@ -43,14 +43,14 @@ class ContactDisponibility
     private $hourEnd;
 
     /**
-     * @var \InformationContact
+     * @var \Utilisateur
      *
-     * @ORM\ManyToOne(targetEntity="InformationContact")
+     * @ORM\ManyToOne(targetEntity="Utilisateur")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="contact_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * })
      */
-    private $contact;
+    private $user;
 
     public function getId(): ?int
     {
@@ -93,14 +93,14 @@ class ContactDisponibility
         return $this;
     }
 
-    public function getContact(): ?InformationContact
+    public function getUser(): ?Utilisateur
     {
-        return $this->contact;
+        return $this->user;
     }
 
-    public function setContact(?InformationContact $contact): self
+    public function setUser(?Utilisateur $user): self
     {
-        $this->contact = $contact;
+        $this->user = $user;
 
         return $this;
     }

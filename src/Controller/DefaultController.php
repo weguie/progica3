@@ -7,14 +7,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Gite;
+use App\Entity\Utilisateur;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class DefaultController extends AbstractController
 {
     #[Route('/', name: 'app_default')]
     public function index(ManagerRegistry $doctrine): Response
     {
-        $gite = $doctrine->getRepository(Gite::class)->findOneBy(['id' => rand(110, 118)]);
-        $giteRand = $doctrine->getRepository(Gite::class)->findOneBy(['id' => rand(109, 118)]);
+        $gite = $doctrine->getRepository(Gite::class)->findOneBy(['id' => rand(119, 128)]);
+        $giteRand = $doctrine->getRepository(Gite::class)->findOneBy(['id' => rand(119, 128)]);
 
         return $this->render('default/index.html.twig', [
             'gite' => $gite,
@@ -23,9 +25,11 @@ class DefaultController extends AbstractController
     }
 
     #[Route('/account', name: 'account')]
-    public function account(): Response
+    public function account(UserInterface $user): Response
     {
-        return $this->render('login/account.html.twig');
+        return $this->render('login/account.html.twig', [
+            'user' => $user
+        ]);
     }
 
     #[Route('/gites', name: 'gites')]
@@ -51,7 +55,8 @@ class DefaultController extends AbstractController
         $gite = new Gite();
 
         $form = $this->createFormBuilder($gite)
-                    ->add('');
+                    ->add('Title');
+
 
 
 
@@ -66,10 +71,13 @@ class DefaultController extends AbstractController
     public function show(ManagerRegistry $doctrine, int $id): Response
     {
         $gite = $doctrine->getRepository(Gite::class)->find($id);
-        $dispo = $doctrine->getRepository(Gite::class)->find($id);
+        $user = $gite->getUser();
+
+        var_dump($user);
 
         return $this->render('default/show.html.twig', [
             'gite' => $gite,
+            'user' => $user
         ]);
     }
 }
