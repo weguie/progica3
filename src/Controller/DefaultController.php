@@ -10,10 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 
 class DefaultController extends AbstractController
 {
+    //Affiche 2 gîtes aléatoirement sur la page home
     #[Route('/', name: 'app_default')]
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -26,6 +29,7 @@ class DefaultController extends AbstractController
         ]);
     }
 
+    //Page account qui accueille avec le prénom de la personne
     #[Route('/account', name: 'account')]
     public function account(UserInterface $user): Response
     {
@@ -34,6 +38,7 @@ class DefaultController extends AbstractController
         ]);
     }
 
+    //Page avec tous les gîtes 
     #[Route('/gites', name: 'gites')]
     public function showAll(ManagerRegistry $doctrine): Response
     {
@@ -45,13 +50,15 @@ class DefaultController extends AbstractController
         ]);
     }
 
+    //Page statique
     #[Route('/apropos', name: 'about_us')]
     public function aboutUs(): Response
     {
         return $this->render('default/apropos.html.twig');
     }
 
-    #[Route('/create', name: 'create')]
+    //Page de création de nouvelle annonce
+    #[Route('/house/new', name: 'create')]
     public function create(Request $request, UserInterface $user, ManagerRegistry $manager): Response
     {
         $gite = new Gite();
@@ -72,21 +79,52 @@ class DefaultController extends AbstractController
 
         if($form->isSubmitted()&& $form->isValid()){
             $gite->setUser($user);
-
             $em = $manager->getManager();
             $em->persist($gite);
             $em->flush();
             return $this->redirectToRoute('show_house', ['id' => $gite->getId()]);
         }
-        dump($gite);
 
         return $this->render('login/create.html.twig', [
             'formGite' => $form->createView()
         ]);
     }
 
+    //Page de modification d'annonce
+    /**
+     * @Route("/house/{id}/edit", name="edit")
+     * @Entity("gite", expr="repository.find(id)")
+     */
+    public function form(Gite $gite = null, Request $request, UserInterface $user, ManagerRegistry $manager): Response
+    {
 
+        $form = $this->createFormBuilder($gite)
+                    ->add('title')
+                    ->add('description')
+                    ->add('image')
+                    ->add('isAllowed')
+                    ->add('isAllwoedPrice')
+                    ->add('price')
+                    ->add('location')
+                    ->add('bed')
+                    ->add('room')
+                    ->getForm();
 
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()&& $form->isValid()){
+            $em = $manager->getManager();
+            $em->persist($gite);
+            $em->flush();
+            return $this->redirectToRoute('show_house', ['id' => $gite->getId()]);
+        }
+
+        return $this->render('login/create.html.twig', [
+            'formGite' => $form->createView()
+        ]);
+    }
+
+    //Page pour avoir plus de précision sur une annonce
     #[Route('/show/{id}', name: 'show_house')]
     public function show(ManagerRegistry $doctrine, int $id): Response
     {
