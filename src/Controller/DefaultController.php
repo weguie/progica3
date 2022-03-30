@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Gite;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Entity\Gite;
-use App\Entity\Utilisateur;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 
 class DefaultController extends AbstractController
 {
@@ -50,17 +52,36 @@ class DefaultController extends AbstractController
     }
 
     #[Route('/create', name: 'create')]
-    public function create(): Response
+    public function create(Request $request, UserInterface $user, ManagerRegistry $manager): Response
     {
         $gite = new Gite();
 
         $form = $this->createFormBuilder($gite)
-                    ->add('Title')
-                    ->add('Description')
+                    ->add('title')
+                    ->add('description')
+                    ->add('image')
+                    ->add('isAllowed')
+                    ->add('isAllwoedPrice')
+                    ->add('price')
+                    ->add('location')
+                    ->add('bed')
+                    ->add('room')
                     ->getForm();
 
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()&& $form->isValid()){
+            $gite->setUser($user);
+
+            $em = $manager->getManager();
+            $em->persist($gite);
+            $em->flush();
+            return $this->redirectToRoute('show_house', ['id' => $gite->getId()]);
+        }
+        dump($gite);
+
         return $this->render('login/create.html.twig', [
-            'controller_name' => 'DefaultController',
+            'formGite' => $form->createView()
         ]);
     }
 

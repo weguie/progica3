@@ -27,6 +27,9 @@ class RegistrationFormType extends AbstractType
             ->add('lastName', TextType::class, [
                 'label' => 'Nom'
             ])
+            ->add('phone', TextType::class, [
+                'label' => 'Numéro de téléphone'
+            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller

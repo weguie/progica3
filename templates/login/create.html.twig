@@ -3,8 +3,22 @@
 {% block title %}Progica{% endblock %}
 
 {% block body %}
-<h1>Create </h1>
+<h1>Create</h1> 
 
+{{form_start(formGite)}}
 
+    {{form_row(formGite.title, {'attr': {'placeholder':"Nom du gîte"}})}}
+    {{form_row(formGite.description, {'attr': {'placeholder':"Description"}})}}
+    {{form_row(formGite.image, {'attr': {'placeholder':"Image"}})}}
+    {{form_row(formGite.isAllowed)}}
+    {{form_row(formGite.isAllwoedPrice, {'attr': {'placeholder':"Prix si animaux acceptés"}})}}
+    {{form_row(formGite.price, {'attr': {'placeholder':"Prix du logement"}})}}
+    {{form_row(formGite.location, {'attr': {'placeholder':"Ville"}})}}
+    {{form_row(formGite.bed, {'attr': {'placeholder':"Nombre de lit"}})}}
+    {{form_row(formGite.room, {'attr': {'placeholder':"Nombre de chambre"}})}}
+
+    <button type="submit" class="btn btn-dark">Enregistrer</button>
+
+{{form_end(formGite)}}
 
 {% endblock %}
