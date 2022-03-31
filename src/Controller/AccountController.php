@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Gite;
+use App\Entity\Utilisateur;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,26 +12,22 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Component\Security\Core;
 
 class AccountController extends AbstractController
 {
-     //Page avec les annonces des gens
-     #[Route('/account/{id}', name: 'account')]
-     public function showAccount(UserInterface $user, ManagerRegistry $doctrine, int $id): Response
-     {
-         $gite = $doctrine->getRepository(Gite::class)->find($id);
-         $user = $gite->getUser();
- 
-         return $this->render('login/account.html.twig');
-     }
- 
      //Page account qui accueille avec le prénom de la personne
+
      #[Route('/account', name: 'account')]
-     public function account(UserInterface $user): Response
+     public function account(UserInterface $user, ManagerRegistry $doctrine): Response
      {
-         return $this->render('account/account.html.twig', [
-             'user' => $user
-         ]);
+        // $IDUSER = explode(":", explode(";", $_SESSION["_sf2_attributes"]["_security_main"])[5])[1];
+
+        // $gite = $doctrine->getRepository(Gite::class)->findBy(['user_id' => $IDUSER]);
+        return $this->render('account/account.html.twig', [
+            'user' => $user,
+            // 'gite' => $gite
+        ]);
      }
 
      //Page de création de nouvelle annonce

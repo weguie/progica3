@@ -22,8 +22,8 @@ class AppFixtures extends Fixture
         for($i = 1; $i <= 10; $i++) {
 
             $user = new Utilisateur();
-            $user->setEmail('test'.$i.'@test.com')
-                  ->setPassword(rand(1000,1000000))
+            $user->setEmail($faker->email())
+                  ->setPassword('')
                   ->setRoles(['ROLE_USER'])
                   ->setFirstName($faker->firstName())
                   ->setLastName($faker->lastName())
@@ -31,10 +31,10 @@ class AppFixtures extends Fixture
             $manager->persist($user);
 
             $gite = new Gite();
-            $gite->setTitle($faker->firstName())
+            $gite->setTitle($faker->word())
                 ->setDescription($faker->realText())
                 ->setUser($user)
-                ->setImage('https://storage.googleapis.com/epc-photos/photo_b6f6f01d-f5bb-4d72-a270-607bb878029c.png')
+                ->setImage($faker->imageUrl(360, 480))
                 ->setIsAllowed(rand(0, 1))
                 ->setIsAllwoedPrice(rand(1 , 30))
                 ->setPrice(rand(100, 2000))
@@ -45,13 +45,13 @@ class AppFixtures extends Fixture
 
             $dispo = new Disponibility();
             $dispo->setGite($gite)
-                ->setDateStart($faker->dateTime())
-                ->setDateEnd($faker->dateTime());
+                ->setDateStart($faker->dateTimeBetween('-10 days','now', $timezone = null))
+                ->setDateEnd($faker->dateTimeBetween('now','+ 15 days', $timezone = null));
             $manager->persist($dispo);
 
             $contactDispo = new ContactDisponibility();
             $contactDispo->setUser($user)
-                ->setDay("Wednesday")
+                ->setDay($faker->dayOfWeek())
                 ->setHourStart(rand(8, 14))
                 ->setHourEnd(rand(15, 23));
             $manager->persist($contactDispo);
