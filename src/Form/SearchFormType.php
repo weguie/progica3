@@ -27,7 +27,7 @@ class SearchFormType extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Titre',
+                    'placeholder' => 'Nom du gîte',
                 ],
 
             ])
@@ -35,15 +35,15 @@ class SearchFormType extends AbstractType
                 'required' => false,
                 'label' => 'Animaux autorisés',
                 'choices'  => [
-                    'Yes' => true,
-                    'No' => false,
+                    'Oui' => true,
+                    'Non' => false,
                 ],
             ])
             ->add('price', IntegerType::class, [
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Budget max',
+                    'placeholder' => 'Prix du gîte',
                 ],
             ])
             ->add('submit', SubmitType::class, [

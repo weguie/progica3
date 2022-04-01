@@ -6,19 +6,18 @@ use App\Entity\Gite;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 
 class DefaultController extends AbstractController
 {
-    //Affiche 2 gîtes aléatoirement sur la page home
+    // Page Accueil, Affiche 2 gîtes aléatoirement (à ajouter un vrai rand de la bdd)
+
     #[Route('/', name: 'app_default')]
     public function index(ManagerRegistry $doctrine): Response
     {
+        //Appel de doctrine pour trouver un gîte avec un id rand
         $gite = $doctrine->getRepository(Gite::class)->findOneBy(['id' => rand(179, 188)]);
         $giteRand = $doctrine->getRepository(Gite::class)->findOneBy(['id' => rand(179, 188)]);
 
@@ -28,19 +27,20 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    //Page avec tous les gîtes 
+    // Page qui recense tous les gîtes 
+
     #[Route('/gites', name: 'gites')]
     public function showAll(ManagerRegistry $doctrine): Response
     {
-        $repo = $doctrine->getRepository(Gite::class);
+        $gites = $doctrine->getRepository(Gite::class)->findAll();
 
-        $gites = $repo->findAll();
         return $this->render('default/gites.html.twig', [
             'gites' => $gites,
         ]);
     }
 
-    //Page statique
+    //Page statique "à propos"
+
     #[Route('/apropos', name: 'about_us')]
     public function aboutUs(): Response
     {
@@ -48,6 +48,7 @@ class DefaultController extends AbstractController
     }
 
     //Page pour avoir plus de précision sur une annonce
+
     #[Route('/show/{id}', name: 'show_house')]
     public function show(ManagerRegistry $doctrine, int $id): Response
     {
@@ -64,7 +65,7 @@ class DefaultController extends AbstractController
         return $this->render('default/show.html.twig', [
             'gite' => $gite,
             'user' => $user,
-            'answer' => $answer 
+            'answer' => $answer
         ]);
     }
 }

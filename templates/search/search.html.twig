@@ -1,34 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Progica{% endblock %}
+{% block title %} Progica {% endblock %}
 
 {% block body %}
-<h1>Recherche</h1>
-{{ form_start(search_form) }}
-{{form(search_form)}}
-{{ form_end(search_form) }}
+	<h1>Recherche</h1> 
 
-<h1>Résultats</h1>
-{% for gite in gites %}
-<div class="col-md-12">
-		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-			<div class="col p-4 d-flex flex-column position-static">
-				<strong class="d-inline-block mb-2 text-success">{{gite.location}}</strong>
-				<h3 class="mb-0">{{gite.title}}</h3>
-				<p>{{gite.price}}€ / jour</p>
-				<p>Ce gîte dispose de {{gite.room}}
-					chambre(s) et de {{gite.bed}}
-					lit(s).</p>
-				<p>Description : {{gite.description}}</p>
-                <a href="">See more</a>
-			</div>
-			<div class="col-auto d-none d-lg-block">
-				<img src="{{gite.image}}" alt="" style="width:200px; height:250px">
+	{{ form_start(search_form) }} 
+	{{form(search_form)}} 
+	{{ form_end(search_form) }}
+
+	<hr>
+
+	<h2>Résultats :</h2>
+
+	{% for gite in gites %}
+		<div class="col-md-12">
+			<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+				<div class="col p-4 d-flex flex-column position-static">
+					<strong class="d-inline-block mb-2 text-success">{{gite.location}}</strong>
+					<h3 class="mb-0">{{gite.title}}</h3>
+					<p>{{gite.price}}€ / jour</p>
+					<p>Ce gîte dispose de {{gite.room}}
+						chambre(s) et de {{gite.bed}}
+						lit(s).</p>
+					<p>Description : {{gite.description}}</p>
+					<a href="{{path('show_house', {'id': gite.id})}}">See more</a>
+				</div>
+				<div class="col-auto d-none d-lg-block">
+					<img src="{{gite.image}}" alt="" style="width:200px; height:250px">
+				</div>
 			</div>
 		</div>
-	</div>
 
-{% endfor %}
+	{% endfor %}
 
 {% endblock %}
-

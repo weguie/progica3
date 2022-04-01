@@ -42,6 +42,17 @@ class GiteRepository extends ServiceEntityRepository
                     ->getResult();
     }
 
-    
+      /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function searchUser($IDUSER)
+    {
+        return $this->createQueryBuilder('gite')
+                    ->leftJoin('gite.user', 'u')
+                    ->where("u.id = $IDUSER")
+                    ->getQuery()
+                    ->getResult();
+    }
 
 }

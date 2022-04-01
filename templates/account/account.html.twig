@@ -3,11 +3,13 @@
 {% block title %}Progica{% endblock %}
 
 {% block body %}
-<h1>Dashboard</h1>
+<hr>
+<h2 style="text-align: center;">Bonjour {{user.firstName}}</h2>
+<hr>
 
-<h2>Hello {{user.firstName}}</h2>
-
-{# <div class="col-md-12">
+<h3>Vos annonces : </h3>
+{% if gite != null %}
+<div class="col-md-12">
 	<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 		<div class="col p-4 d-flex flex-column position-static">
 			<strong class="d-inline-block mb-2 text-success">{{gite.location}}</strong>
@@ -17,20 +19,25 @@
 				chambre(s) et de {{gite.bed}}
 				lit(s).</p>
 			<p>Description : {{gite.description}}</p>
-			<p>Contact : {{user.firstName}} {{user.lastName}}</p>
-			<p>Numéro de contact : {{user.phone}}</p>
-			<p>Animaux autorisés : {{answer}}</p>
+			<a href="{{path('show_house', {'id': gite.id})}}">See more</a>
 		</div>
 		<div class="col-auto d-none d-lg-block">
 			<img src="{{gite.image}}" alt="" style="width:200px; height:250px">
 		</div>
 	</div>
-</div> #}
+</div>
+<button type="button" class="btn btn-dark"><a href="{{path('edit', {'id': gite.id})}}" style="text-decoration: none; color: white;">Modifier</a></button>
+<button type="button" class="btn btn-dark"><a href="{{path('delete', {'id': gite.id})}}" style="text-decoration: none; color: white;">Supprimer</a></button>
+<hr>
+{% else %}
 
-{{user.id}}
-<a href="{{path('create')}}">Créer une nouvelle annonce</a>
+<p>Vous n'avez pas d'annonce</p>
+{% endif %}
+<div style="align-items: center;">
+<button type="button" class="btn btn-dark"><a href="{{path('create')}}" style="text-decoration: none; color: white;">Créer une nouvelle annonce</a></button>
 
+<button type="button" class="btn btn-dark"><a href="/logout" style="text-decoration: none; color: white;">Log Out</a></button>
+</div>
 
-<a href="/logout">Log Out</a>
 
 {% endblock %}

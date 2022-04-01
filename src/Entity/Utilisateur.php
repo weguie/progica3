@@ -17,6 +17,8 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
+     * @ORM\ManyToOne(targetEntity="Utilisateur")
+     * @ORM\JoinColumn(name="id", referencedColumnName="user_id")
      * @ORM\Column(type="integer")
      */
     private $id;
