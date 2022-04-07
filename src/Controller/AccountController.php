@@ -3,10 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Gite;
-use App\Entity\Utilisateur;
+use App\Entity\Cities;
 
 use App\Repository\GiteRepository;
-use App\Repository\UtilisateurRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,14 +14,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
-use Symfony\Component\Security\Core;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 class AccountController extends AbstractController
 {
      //Page account qui accueille avec le prénom de la personne et les annonces 
 
      #[Route('/account', name: 'account')]
-     public function account(UserInterface $user, ManagerRegistry $doctrine, GiteRepository $giteRepository): Response
+     public function account(UserInterface $user, GiteRepository $giteRepository): Response
      {
         // avoir accès à l'id de l'user de la session :
         // $IDUSER = explode(":", explode(";", $_SESSION["_sf2_attributes"]["_security_main"])[5])[1];
@@ -52,6 +52,7 @@ class AccountController extends AbstractController
     {
         //Nouvelle entité
         $gite = new Gite();
+
         //Formulaire
         $form = $this->createFormBuilder($gite)
                     ->add('title')
@@ -60,9 +61,13 @@ class AccountController extends AbstractController
                     ->add('isAllowed')
                     ->add('isAllwoedPrice')
                     ->add('price')
-                    ->add('location')
                     ->add('bed')
                     ->add('room')
+                    ->add( 'city', EntityType::class, [
+                        'class' => Cities::class,
+                        'choice_label' => 'name',
+                        'multiple' => false,
+                    ] )
                     ->getForm();
 
         $form->handleRequest($request);
@@ -95,7 +100,11 @@ class AccountController extends AbstractController
                     ->add('isAllowed')
                     ->add('isAllwoedPrice')
                     ->add('price')
-                    ->add('location')
+                    ->add( 'city', EntityType::class, [
+                        'class' => Cities::class,
+                        'choice_label' => 'name',
+                        'multiple' => false,
+                    ] )
                     ->add('bed')
                     ->add('room')
                     ->getForm();
@@ -116,9 +125,9 @@ class AccountController extends AbstractController
 
     //Suppression d'annonce 
     #[Route('/house/delete/{id}', name: 'delete')]
-     public function delete(ManagerRegistry $doctrine, ManagerRegistry $manager, int $id): Response
+     public function delete(GiteRepository $giteRepository, ManagerRegistry $manager, int $id): Response
      {
-        $gite = $doctrine->getRepository(Gite::class)->find($id);
+        $gite = $giteRepository->find($id);
         $em = $manager->getManager();
         $em->remove($gite);
         $em->flush();

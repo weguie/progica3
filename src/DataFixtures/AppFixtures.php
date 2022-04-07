@@ -2,24 +2,28 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Cities;
 use App\Entity\ContactDisponibility;
 use App\Entity\Disponibility;
 use App\Entity\Gite;
-use App\Entity\Option;
 use App\Entity\Utilisateur;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
-use Faker\Provider\DateTime;
 
 
 class AppFixtures extends Fixture
 {
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
+        $generator = \Faker\Factory::create();
+        $populator = new \Faker\ORM\Propel\Populator($generator);
+        $populator->addEntity(Cities::class, 1000);
+        $insertedPKs = $populator->execute();
 
-        for($i = 1; $i <= 10; $i++) {
+        for($i = 1; $i <= 2; $i++) {
 
             $user = new Utilisateur();
             $user->setEmail($faker->email())
@@ -29,7 +33,7 @@ class AppFixtures extends Fixture
                   ->setLastName($faker->lastName())
                   ->setPhone($faker->phoneNumber());
             $manager->persist($user);
-
+            for($j = 1; $j <= 100; $j++) {
             $gite = new Gite();
             $gite->setTitle($faker->word())
                 ->setDescription($faker->realText())
@@ -38,7 +42,7 @@ class AppFixtures extends Fixture
                 ->setIsAllowed(rand(0, 1))
                 ->setIsAllwoedPrice(rand(1 , 30))
                 ->setPrice(rand(100, 2000))
-                ->setLocation($faker->city())
+                ->setCity($insertedPKs(rand(0,1000)))
                 ->setBed(rand(0, 10))
                 ->setRoom(rand(0, 10));
             $manager->persist($gite);
@@ -55,6 +59,7 @@ class AppFixtures extends Fixture
                 ->setHourStart(rand(8, 14))
                 ->setHourEnd(rand(15, 23));
             $manager->persist($contactDispo);
+            }
         }
         $manager->flush();
     }

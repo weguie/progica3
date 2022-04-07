@@ -2,41 +2,50 @@
 
 namespace App\Controller;
 
-use App\Entity\Gite;
-
+use App\Repository\CitiesRepository;
+use App\Repository\GiteRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Persistence\ManagerRegistry;
 
 
 class DefaultController extends AbstractController
 {
-    // Page Accueil, Affiche 2 gîtes aléatoirement (à ajouter un vrai rand de la bdd)
+    // Page Accueil, Affiche 2 gîtes aléatoirement
 
     #[Route('/', name: 'app_default')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(GiteRepository $giteRepository, ManagerRegistry $doctrine, CitiesRepository $citiesRepository): Response
     {
+        //Récupérer liste des gîtes
+        $list = $giteRepository->findAll();
+        //Récupérer la longueur de l'array list pour le rand
+        $listLength = count($list)-1;
 
-        $words = $doctrine->getRepository(Gite::class)->findAll();
-        shuffle($words);
-        dump($words[0]);
-        //Appel de doctrine pour trouver un gîte avec un id rand
-        $gite = $doctrine->getRepository(Gite::class)->findOneBy(['id' => $words[rand(0,9)]]);
-        $giteRand = $doctrine->getRepository(Gite::class)->findOneBy(['id' => $words[rand(0,9)]]);
+        //Trouver un gîte avec un id rand
+        $giteRand1 = $giteRepository->findOneBy(['id' => $list[rand(0, $listLength)]]);
+        $giteRand2 = $giteRepository->findOneBy(['id' => $list[rand(0, $listLength)]]);
+
+        $cityId1 = $giteRand1->getCity()->getId();
+        $cityId2 = $giteRand2->getCity()->getId();
+
+        $city1 = $citiesRepository->findBy(['id' => $cityId1]);
+        $city2 = $citiesRepository->findBy(['id' => $cityId2]);
 
         return $this->render('default/index.html.twig', [
-            'gite' => $gite,
-            'giteRand' => $giteRand
+            'gite' => $giteRand1,
+            'giteRand' => $giteRand2,
+            'city1' => $city1[0],
+            'city2' => $city2[0]
         ]);
     }
 
     // Page qui recense tous les gîtes 
 
     #[Route('/gites', name: 'gites')]
-    public function showAll(ManagerRegistry $doctrine): Response
+    public function showAll(GiteRepository $giteRepository): Response
     {
-        $gites = $doctrine->getRepository(Gite::class)->findAll();
+        $gites = $giteRepository->findAll();
 
         return $this->render('default/gites.html.twig', [
             'gites' => $gites,
@@ -54,9 +63,9 @@ class DefaultController extends AbstractController
     //Page pour avoir plus de précision sur une annonce
 
     #[Route('/show/{id}', name: 'show_house')]
-    public function show(ManagerRegistry $doctrine, int $id): Response
+    public function show(GiteRepository $giteRepository, int $id): Response
     {
-        $gite = $doctrine->getRepository(Gite::class)->find($id);
+        $gite = $giteRepository->find($id);
         $user = $gite->getUser();
         $pets = $gite->getIsAllowed();
 

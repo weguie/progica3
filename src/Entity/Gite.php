@@ -3,13 +3,18 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * Gite
  *
- * @ORM\Table(name="gite", uniqueConstraints={@ORM\UniqueConstraint(name="user_id", columns={"user_id"}), @ORM\UniqueConstraint(name="id_location", columns={"location"})})
+ * @ORM\Table(name="gite", uniqueConstraints={@ORM\UniqueConstraint(name="user_id", columns={"user_id"})})
  * @ORM\Entity
  */
+#[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: ['title' => 'partial', 'isAllowed' => 'exact', 'price' => 'partial', 'city' => 'partial'])]
 class Gite
 {
     /**
@@ -64,13 +69,6 @@ class Gite
     private $price;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="location", type="string", length=120, nullable=false)
-     */
-    private $location;
-
-    /**
      * @var int
      *
      * @ORM\Column(name="bed", type="integer", nullable=false)
@@ -93,6 +91,12 @@ class Gite
      * })
      */
     private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Cities::class, inversedBy="gites")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $city;
 
     public function getId(): ?int
     {
@@ -171,18 +175,6 @@ class Gite
         return $this;
     }
 
-    public function getLocation(): ?string
-    {
-        return $this->location;
-    }
-
-    public function setLocation(string $location): self
-    {
-        $this->location = $location;
-
-        return $this;
-    }
-
     public function getBed(): ?int
     {
         return $this->bed;
@@ -215,6 +207,18 @@ class Gite
     public function setUser(?Utilisateur $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCity(): ?Cities
+    {
+        return $this->city;
+    }
+
+    public function setCity(?Cities $city): self
+    {
+        $this->city = $city;
 
         return $this;
     }

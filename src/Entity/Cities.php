@@ -2,14 +2,22 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
 
 /**
  * Cities
- *
+ * @ORM\Entity(repositoryClass="App\Repository\CitiesRepository")
  * @ORM\Table(name="cities", indexes={@ORM\Index(name="cities_department_code_foreign", columns={"department_code"})})
  * @ORM\Entity
  */
+#[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: ['name' => 'exact'])]
 class Cities
 {
     /**
@@ -72,6 +80,16 @@ class Cities
      * })
      */
     private $departmentCode;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Gite::class, mappedBy="city", orphanRemoval=true)
+     */
+    private $gites;
+
+    public function __construct()
+    {
+        $this->gites = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -158,6 +176,36 @@ class Cities
     public function setDepartmentCode(?Departments $departmentCode): self
     {
         $this->departmentCode = $departmentCode;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Gite>
+     */
+    public function getGites(): Collection
+    {
+        return $this->gites;
+    }
+
+    public function addGite(Gite $gite): self
+    {
+        if (!$this->gites->contains($gite)) {
+            $this->gites[] = $gite;
+            $gite->setCity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGite(Gite $gite): self
+    {
+        if ($this->gites->removeElement($gite)) {
+            // set the owning side to null (unless already changed)
+            if ($gite->getCity() === $this) {
+                $gite->setCity(null);
+            }
+        }
 
         return $this;
     }

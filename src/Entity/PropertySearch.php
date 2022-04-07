@@ -25,6 +25,11 @@ class PropertySearch {
      */
     private $price;
 
+     /**
+     * @var string|null
+     */
+    private $regions;
+
     /**
      * @var bool|null
      */
@@ -36,6 +41,14 @@ class PropertySearch {
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRegions()
+    {
+        return $this->regions;
     }
 
     /**
@@ -84,5 +97,10 @@ class PropertySearch {
         $this->price = $price;
 
         return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 }

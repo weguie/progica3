@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * Departments
@@ -10,6 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="departments", indexes={@ORM\Index(name="departments_region_code_foreign", columns={"region_code"}), @ORM\Index(name="departments_code_index", columns={"code"})})
  * @ORM\Entity
  */
+
+#[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: ['name' => 'partial'])]
 class Departments
 {
     /**

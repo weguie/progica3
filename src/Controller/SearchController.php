@@ -7,6 +7,8 @@ use App\Repository\GiteRepository;
 use App\Form\SearchFormType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,4 +37,16 @@ class SearchController extends AbstractController
             'gites' => $gites
         ]);
     }
+
+    // public function searchCity()
+    // {
+    //     $form = $this->createFormBuilder(null)
+    //             ->add('query', TextType::class)
+    //             ->add('search', SubmitType::class)
+    //             ->getForm();
+
+    //     return $this->render('search/searchCity.html.twig', [
+    //         'form' => $form->createView()
+    //     ]);
+    // }
 }

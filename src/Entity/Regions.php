@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * Regions
@@ -10,6 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="regions", uniqueConstraints={@ORM\UniqueConstraint(name="regions_code_unique", columns={"code"})})
  * @ORM\Entity
  */
+
+#[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: ['name' => 'partial'])]
 class Regions
 {
     /**
