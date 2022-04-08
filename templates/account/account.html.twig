@@ -9,37 +9,36 @@
 
 <h3>Vos annonces : </h3>
 {% if gites != null %}
-{% for gite in gites %}
-<div class="col-md-12">
-	<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-		<div class="col p-4 d-flex flex-column position-static">
-			<strong class="d-inline-block mb-2 text-success">{{gite.city.name}}</strong>
-			<h3 class="mb-0">{{gite.title}}</h3>
-			<p>{{gite.price}}€ / jour</p>
-			<p>Ce gîte dispose de {{gite.room}}
-				chambre(s) et de {{gite.bed}}
-				lit(s).</p>
-			<p>Description : {{gite.description}}</p>
-			<a href="{{path('show_house', {'id': gite.id})}}">See more</a>
-		</div>
-		<div class="col-auto d-none d-lg-block">
-			<img src="{{gite.image}}" alt="" style="width:400px; height:300px">
+	{% for gite in gites %}
+	<div class="col-md-12">
+		<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+			<div class="col p-4 d-flex flex-column position-static">
+				<strong class="d-inline-block mb-2 text-success">{{gite.city.name}}</strong>
+				<h3 class="mb-0">{{gite.title}}</h3>
+				<p>{{gite.price}}€ / jour</p>
+				<p>Ce gîte dispose de {{gite.room}}
+					chambre(s) et de {{gite.bed}}
+					lit(s).</p>
+				<p>Description : {{gite.description}}</p>
+				<a href="{{path('show_house', {'id': gite.id})}}">See more</a>
+			</div>
+			<div class="col-auto d-none d-lg-block">
+				<img src="{{gite.image}}" alt="" style="width:400px; height:300px">
+			</div>
 		</div>
 	</div>
-</div>
-<button type="button" class="btn btn-dark"><a href="{{path('edit', {'id': gite.id})}}" style="text-decoration: none; color: white;">Modifier</a></button>
-<button type="button" class="btn btn-dark"><a href="{{path('delete', {'id': gite.id})}}" style="text-decoration: none; color: white;">Supprimer</a></button>
-<hr>
-{% endfor %} 
+	<button type="button" class="btn btn-dark"><a href="{{path('edit', {'id': gite.id})}}" style="text-decoration: none; color: white;">Modifier</a></button>
+	<button type="button" class="btn btn-dark"><a href="{{path('delete', {'id': gite.id})}}" style="text-decoration: none; color: white;">Supprimer</a></button>
+	<hr>
+	{% endfor %} 
+
 {% else %}
-
-<p>Vous n'avez pas d'annonce</p>
+	<p>Vous n'avez pas d'annonce</p>
 {% endif %}
+
 <div style="align-items: center;">
-<button type="button" class="btn btn-dark"><a href="{{path('create')}}" style="text-decoration: none; color: white;">Créer une nouvelle annonce</a></button>
-
-<button type="button" class="btn btn-dark"><a href="/logout" style="text-decoration: none; color: white;">Log Out</a></button>
+	<button type="button" class="btn btn-dark"><a href="{{path('create')}}" style="text-decoration: none; color: white;">Créer une nouvelle annonce</a></button>
+	<button type="button" class="btn btn-dark"><a href="/logout" style="text-decoration: none; color: white;">Log Out</a></button>
 </div>
-
 
 {% endblock %}

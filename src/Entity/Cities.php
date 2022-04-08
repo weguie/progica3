@@ -9,7 +9,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
-
 /**
  * Cities
  * @ORM\Entity(repositoryClass="App\Repository\CitiesRepository")

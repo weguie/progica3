@@ -26,21 +26,15 @@ class AccountController extends AbstractController
      {
         // avoir accès à l'id de l'user de la session :
         $idUser = $this->getUser()->getId();
-        $gites = $giteRepository->searchUser($idUser);
 
-        if ($gites != null) {
-            return $this->render('account/account.html.twig', [
-            'user' => $user,
-            'gites' => $gites
-        ]);
-              
-        } else {
-            $gites = null;
+        //Recherche de gîte par id de l'user de la session
+        $gites = $giteRepository->searchUser($idUser);
+       
             return $this->render('account/account.html.twig', [
                 'user' => $user,
                 'gites' => $gites
             ]);
-        }
+    
      }
 
     //Page de création de nouvelle annonce
