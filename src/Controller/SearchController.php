@@ -5,10 +5,7 @@ namespace App\Controller;
 use App\Repository\GiteRepository;
 
 use App\Form\SearchFormType;
-use App\Repository\CitiesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,14 +22,13 @@ class SearchController extends AbstractController
 
         // Si le formulaire est rempli et valide 
         if ($searchForm->handleRequest($request)->isSubmitted() && $searchForm->isValid()){
+
             //Récupération du formulaire
             $criteria = $searchForm->getData();
-            dump($criteria);
 
             //Recherche
             $gites = $giteRepository->searchGiteCity($criteria);
             // $gites = $giteRepository->searchGiteTitle($criteria);
-            dump($gites);
 
         }
 
