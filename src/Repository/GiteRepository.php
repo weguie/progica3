@@ -44,10 +44,24 @@ class GiteRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('g')
                     ->leftJoin('g.city', 'c')
-                    ->where('c.name = :cityName')
-                    ->setParameter("cityName", $criteria->getCity())
+                    ->where('c.id = :cityId')
+                    ->setParameter("cityId", $criteria->getCity())
                     ->getQuery()
                     ->getResult();
     }
+
+    
+    // /**
+    //  * @throws ORMException
+    //  * @throws OptimisticLockException
+    //  */
+    // public function searchGiteTitle($criteria)
+    // {
+    //     return $this->createQueryBuilder('g')
+    //                 ->where('g.title = :title')
+    //                 ->setParameter("title", $criteria->getTitle())
+    //                 ->getQuery()
+    //                 ->getResult();
+    // }
 
 }

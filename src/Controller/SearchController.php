@@ -28,8 +28,12 @@ class SearchController extends AbstractController
             //Récupération du formulaire
             $criteria = $searchForm->getData();
             dump($criteria);
+
             //Recherche
             $gites = $giteRepository->searchGiteCity($criteria);
+            // $gites = $giteRepository->searchGiteTitle($criteria);
+            dump($gites);
+
         }
 
         return $this->render('search/search.html.twig', [
@@ -38,16 +42,4 @@ class SearchController extends AbstractController
             'gites' => $gites
         ]);
     }
-
-    // public function searchCity()
-    // {
-    //     $form = $this->createFormBuilder(null)
-    //             ->add('query', TextType::class)
-    //             ->add('search', SubmitType::class)
-    //             ->getForm();
-
-    //     return $this->render('search/searchCity.html.twig', [
-    //         'form' => $form->createView()
-    //     ]);
-    // }
 }
