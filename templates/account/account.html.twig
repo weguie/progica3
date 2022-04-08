@@ -8,7 +8,8 @@
 <hr>
 
 <h3>Vos annonces : </h3>
-{% if gite != null %}
+{% if gites != null %}
+{% for gite in gites %}
 <div class="col-md-12">
 	<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 		<div class="col p-4 d-flex flex-column position-static">
@@ -22,13 +23,14 @@
 			<a href="{{path('show_house', {'id': gite.id})}}">See more</a>
 		</div>
 		<div class="col-auto d-none d-lg-block">
-			<img src="{{gite.image}}" alt="" style="width:200px; height:250px">
+			<img src="{{gite.image}}" alt="" style="width:400px; height:300px">
 		</div>
 	</div>
 </div>
 <button type="button" class="btn btn-dark"><a href="{{path('edit', {'id': gite.id})}}" style="text-decoration: none; color: white;">Modifier</a></button>
 <button type="button" class="btn btn-dark"><a href="{{path('delete', {'id': gite.id})}}" style="text-decoration: none; color: white;">Supprimer</a></button>
 <hr>
+{% endfor %} 
 {% else %}
 
 <p>Vous n'avez pas d'annonce</p>

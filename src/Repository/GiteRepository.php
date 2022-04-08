@@ -21,23 +21,7 @@ class GiteRepository extends ServiceEntityRepository
         parent::__construct($registry, Gite::class);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function searchGiteTitle($criteria)
-    {
-        return $this->createQueryBuilder('g')
-                    ->where('g.title = :title')
-                    ->setParameter("title", $criteria->getTitle())
-                    ->andWhere('g.isAllowed = :isAllowed')
-                    ->setParameter("isAllowed", $criteria->getIsAllowed())
-                    ->andWhere('g.price = :price')
-                    ->setParameter("price", $criteria->getPrice())
-                    ->getQuery()
-                    ->getResult();
-    }
-
+    //recherche par id utilisateur
       /**
      * @throws ORMException
      * @throws OptimisticLockException
@@ -47,6 +31,21 @@ class GiteRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('gite')
                     ->leftJoin('gite.user', 'u')
                     ->where("u.id = $IDUSER")
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    //recherche par nom de ville
+     /**
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function searchGiteCity($criteria)
+    {
+        return $this->createQueryBuilder('g')
+                    ->leftJoin('g.city', 'c')
+                    ->where('c.name = :cityName')
+                    ->setParameter("cityName", $criteria->getCity())
                     ->getQuery()
                     ->getResult();
     }

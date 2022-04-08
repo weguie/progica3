@@ -94,7 +94,7 @@ class Gite
 
     /**
      * @ORM\ManyToOne(targetEntity=Cities::class, inversedBy="gites")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     private $city;
 

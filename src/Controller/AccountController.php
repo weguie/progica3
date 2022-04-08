@@ -25,23 +25,20 @@ class AccountController extends AbstractController
      public function account(UserInterface $user, GiteRepository $giteRepository): Response
      {
         // avoir accès à l'id de l'user de la session :
-        // $IDUSER = explode(":", explode(";", $_SESSION["_sf2_attributes"]["_security_main"])[5])[1];
-
         $idUser = $this->getUser()->getId();
-        $gite = $giteRepository->searchUser($idUser);
+        $gites = $giteRepository->searchUser($idUser);
 
-        if ($gite != null) {
-            dump($gite);
+        if ($gites != null) {
             return $this->render('account/account.html.twig', [
             'user' => $user,
-            'gite' => $gite[0]
+            'gites' => $gites
         ]);
               
         } else {
-            $gite = null;
+            $gites = null;
             return $this->render('account/account.html.twig', [
                 'user' => $user,
-                'gite' => $gite
+                'gites' => $gites
             ]);
         }
      }

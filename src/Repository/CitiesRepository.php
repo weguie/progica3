@@ -20,17 +20,4 @@ class CitiesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Cities::class);
     }
-
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function searchUser($IDUSER)
-    {
-        return $this->createQueryBuilder('gite')
-                    ->leftJoin('gite.user', 'u')
-                    ->where("u.id = $IDUSER")
-                    ->getQuery()
-                    ->getResult();
-    }
 }
