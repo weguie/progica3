@@ -44,8 +44,8 @@ class GiteRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('g')
                     ->leftJoin('g.city', 'c')
-                    ->where('c.id = :cityId')
-                    ->setParameter("cityId", $criteria->getCity())
+                    ->where('c.name = :cityName')
+                    ->setParameter("cityName", $criteria->getCity())
                     ->getQuery()
                     ->getResult();
     }
