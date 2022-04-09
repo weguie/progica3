@@ -6,15 +6,15 @@
 
 {{form_start(formGite)}}
 
-    {{form_row(formGite.title, {'attr': {'placeholder':"Nom du gîte"}})}}
-    {{form_row(formGite.description, {'attr': {'placeholder':"Description"}})}}
-    {{form_row(formGite.image, {'attr': {'placeholder':"Image"}})}}
-    {{form_row(formGite.isAllowed)}}
-    {{form_row(formGite.isAllwoedPrice, {'attr': {'placeholder':"Prix si animaux acceptés"}})}}
-    {{form_row(formGite.price, {'attr': {'placeholder':"Prix du logement"}})}}
-    {{form_row(formGite.city, {'attr': {'placeholder':"Ville"}})}}
-    {{form_row(formGite.bed, {'attr': {'placeholder':"Nombre de lit"}})}}
-    {{form_row(formGite.room, {'attr': {'placeholder':"Nombre de chambre"}})}}
+    {{form_row(formGite.title, {'attr': {'placeholder':"Nom du gîte"}, 'label':false})}}
+    {{form_row(formGite.description, {'attr': {'placeholder':"Description"}, 'label':false})}}
+    {{form_row(formGite.image, {'attr': {'placeholder':"Image"}, 'label':false})}}
+    {{form_row(formGite.isAllowed, {'label':"Animaux acceptés"})}}
+    {{form_row(formGite.isAllwoedPrice, {'attr': {'placeholder':"Prix si animaux acceptés"}, 'label':false})}}
+    {{form_row(formGite.price, {'attr': {'placeholder':"Prix du logement"}, 'label':false})}}
+    {{form_row(formGite.city, {'attr': {'placeholder':"Ville"}, 'label':false})}}
+    {{form_row(formGite.bed, {'attr': {'placeholder':"Nombre de lit"}, 'label':false})}}
+    {{form_row(formGite.room, {'attr': {'placeholder':"Nombre de chambre"}, 'label':false})}}
 
     <button type="submit" class="btn btn-dark">
     Enregistrer

@@ -8,9 +8,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 
 class SearchFormType extends AbstractType
@@ -18,12 +15,19 @@ class SearchFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // ->add('title', TextType::class, [
-            //     'label' => 'Titre',
-            //     'required'   => false,
-            // ])
+           
 
-        //    ->add( 'city', EntityType::class, [
+            ->add('city', SearchType::class, [
+                    'label' => 'Ville',
+                    'required'   => false,
+                    'attr' => ['class' => Cities::class],
+                    ])
+        //  ->add('title', TextType::class, [
+        //        'label' => 'Titre',
+        //        'required'   => false,
+        //       ])
+
+        //  ->add( 'city', EntityType::class, [
         //                 'label' => 'Ville',
         //                 'class' => Cities::class,
         //                 'choice_label' => 'name',
@@ -33,15 +37,8 @@ class SearchFormType extends AbstractType
         //                         ->orderBy('c.name', 'ASC');
         //                 },
         //             ] )
-
-            ->add('city', SearchType::class, [
-                    'label' => 'Ville',
-                    'required'   => false,
-                    'attr' => ['class' => Cities::class],
-                    ])
-
             ->add('submit', SubmitType::class, [
-                'attr' => [
+                    'attr' => [
                     'class' => 'btn btn-dark'
                 ],
                 'label' => 'Rechercher',

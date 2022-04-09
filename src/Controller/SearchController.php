@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\GiteRepository;
 
 use App\Form\SearchFormType;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +17,7 @@ class SearchController extends AbstractController
     #[Route('/search', name: 'app_search')]
     public function search(Request $request, GiteRepository $giteRepository): Response
     {
+        // Initialisation de $gites
         $gites = null;
         //Création du formulaire
         $searchForm = $this->createForm(SearchFormType::class);
@@ -29,7 +31,6 @@ class SearchController extends AbstractController
             //Recherche
             $gites = $giteRepository->searchGiteCity($criteria);
             // $gites = $giteRepository->searchGiteTitle($criteria);
-
         }
 
         return $this->render('search/search.html.twig', [
