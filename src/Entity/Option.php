@@ -35,6 +35,16 @@ class Option
      */
     private $type;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Gite::class, inversedBy="options")
+     */
+    private $gite;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $price;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +70,30 @@ class Option
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getGite(): ?Gite
+    {
+        return $this->gite;
+    }
+
+    public function setGite(?Gite $gite): self
+    {
+        $this->gite = $gite;
+
+        return $this;
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(string $price): self
+    {
+        $this->price = $price;
 
         return $this;
     }

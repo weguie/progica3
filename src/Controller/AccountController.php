@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -57,8 +58,12 @@ class AccountController extends AbstractController
                     ->add( 'city', EntityType::class, [
                         'class' => Cities::class,
                         'choice_label' => 'name',
-                        'multiple' => false,
-                    ] )
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->orderBy('c.name', 'ASC');
+                        },
+                        ] )
+                    ->add('surface')
                     ->getForm();
 
         $form->handleRequest($request);
@@ -94,10 +99,15 @@ class AccountController extends AbstractController
                     ->add( 'city', EntityType::class, [
                         'class' => Cities::class,
                         'choice_label' => 'name',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('c')
+                                ->orderBy('c.name', 'ASC');
+                        },
                         'multiple' => false,
                     ] )
                     ->add('bed')
                     ->add('room')
+                    ->add('surface')
                     ->getForm();
 
         $form->handleRequest($request);

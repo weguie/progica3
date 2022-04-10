@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Option;
 use App\Repository\CitiesRepository;
 use App\Repository\GiteRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -65,7 +66,9 @@ class DefaultController extends AbstractController
     #[Route('/show/{id}', name: 'show_house')]
     public function show(GiteRepository $giteRepository, int $id): Response
     {
+        //Trouver le gîte avec cet Id
         $gite = $giteRepository->find($id);
+        //Trouver utilisateur
         $user = $gite->getUser();
         $pets = $gite->getIsAllowed();
 
@@ -78,7 +81,7 @@ class DefaultController extends AbstractController
         return $this->render('default/show.html.twig', [
             'gite' => $gite,
             'user' => $user,
-            'answer' => $answer
+            'answer' => $answer,
         ]);
     }
 }

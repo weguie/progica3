@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter;
@@ -97,6 +99,21 @@ class Gite
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id")
      */
     private $city;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $surface;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Option::class, mappedBy="gite")
+     */
+    private $options;
+
+    public function __construct()
+    {
+        $this->options = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -223,5 +240,45 @@ class Gite
         return $this;
     }
 
+    public function getSurface(): ?string
+    {
+        return $this->surface;
+    }
 
+    public function setSurface(string $surface): self
+    {
+        $this->surface = $surface;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Option>
+     */
+    public function getOptions(): Collection
+    {
+        return $this->options;
+    }
+
+    public function addOption(Option $option): self
+    {
+        if (!$this->options->contains($option)) {
+            $this->options[] = $option;
+            $option->setGite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOption(Option $option): self
+    {
+        if ($this->options->removeElement($option)) {
+            // set the owning side to null (unless already changed)
+            if ($option->getGite() === $this) {
+                $option->setGite(null);
+            }
+        }
+
+        return $this;
+    }
 }

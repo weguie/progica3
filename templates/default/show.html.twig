@@ -10,6 +10,7 @@
 				<strong class="d-inline-block mb-2 text-success">{{gite.city.name}}</strong>
 				<h3 class="mb-0">{{gite.title}}</h3>
 				<p>{{gite.price}}€ / jour</p>
+				<p>{{gite.surface}}m²</p>
 				<p>Ce gîte dispose de {{gite.room}}
 					chambre(s) et de {{gite.bed}}
 					lit(s).</p>
@@ -17,6 +18,9 @@
 				<p>Contact : {{user.firstName}} {{user.lastName}}</p>
 				<p>Numéro de contact : {{user.phone}}</p>
 				<p>Animaux autorisés : {{answer}}</p>
+				{% if gite.isAllowed == 1 %}
+				<p>{{gite.isAllwoedPrice}}€ / animal</p>
+				{% endif %}	
 			</div>
 			<div class="col-auto d-none d-lg-block">
 				<img src="{{gite.image}}" alt="" style="width:500px; height:400px">

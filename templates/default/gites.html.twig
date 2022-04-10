@@ -11,6 +11,7 @@
 				<div class="col p-4 d-flex flex-column position-static">
 					<strong class="d-inline-block mb-2 text-success">{{gite.city.name}}</strong>
 					<h3 class="mb-0">{{gite.title}}</h3>
+					<p>{{gite.surface}}m²</p>
 					<p class="mb-auto">{{ gite.description|slice(0, 150) ~ '...'}}</p>
 					<a href="{{path('show_house', {'id': gite.id})}}" class="stretched-link">See more</a>
 				</div>

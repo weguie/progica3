@@ -49,7 +49,6 @@ class GiteRepository extends ServiceEntityRepository
                     ->getQuery()
                     ->getResult();
     }
-
     
     // /**
     //  * @throws ORMException
