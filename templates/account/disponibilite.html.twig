@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Progica{% endblock %}
+
+{% block body %}
+
+{{form_start(formContact)}}
+
+    {{form_row(formContact.day, {'attr': {'placeholder':"Jour de disponibilité"}, 'label':false})}}
+    {{form_row(formContact.hourStart, {'attr': {'placeholder':"Heure de début"}, 'label':false})}}
+    {{form_row(formContact.hourEnd, {'attr': {'placeholder':"Heure de fin"}, 'label':false})}}
+    <button type="submit" class="btn btn-dark">
+    Enregistrer
+    </button>
+
+{{form_end(formContact)}}
+
+{% endblock %}

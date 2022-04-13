@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Gite;
 use App\Entity\Cities;
-
+use App\Entity\ContactDisponibility;
+use App\Repository\ContactDisponibilityRepository;
 use App\Repository\GiteRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +24,7 @@ class AccountController extends AbstractController
      //Page account qui accueille avec le prénom de la personne et les annonces 
 
      #[Route('/account', name: 'account')]
-     public function account(UserInterface $user, GiteRepository $giteRepository): Response
+     public function account(UserInterface $user, GiteRepository $giteRepository, ContactDisponibilityRepository $contactDisponibilityRepository): Response
      {
         // avoir accès à l'id de l'user de la session :
         $idUser = $this->getUser()->getId();
@@ -31,9 +32,13 @@ class AccountController extends AbstractController
         //Recherche de gîte par id de l'user de la session
         $gites = $giteRepository->searchUser($idUser);
        
+        //Recherche des disponibilités dans la base de données
+        $contactDispo = $contactDisponibilityRepository->findOneBy(['user' => $idUser]); 
+
             return $this->render('account/account.html.twig', [
                 'user' => $user,
-                'gites' => $gites
+                'gites' => $gites,
+                'disponibilites' => $contactDispo
             ]);
     
      }
@@ -134,6 +139,36 @@ class AccountController extends AbstractController
         $em->flush();
 
         return $this->render('account/delete.html.twig');
+     }
+
+     #[Route('/house/contact', name: 'contactDispo')]
+     public function disponibility(Request $request, UserInterface $user, ManagerRegistry $manager): Response
+     {
+         //Nouvelle entité
+         $contactDispo = new ContactDisponibility();
+         $contactDispo->setUser($user);
+         
+ 
+         //Formulaire
+         $form = $this->createFormBuilder($contactDispo)
+                     ->add('day')
+                     ->add('hourStart')
+                     ->add('hourEnd')
+                     ->getForm();
+ 
+         $form->handleRequest($request);
+ 
+         if($form->isSubmitted()&& $form->isValid()){
+             $contactDispo->setUser($user);
+             $em = $manager->getManager();
+             $em->persist($contactDispo);
+             $em->flush();
+             return $this->redirectToRoute('account');
+         }
+ 
+         return $this->render('account/disponibilite.html.twig', [
+             'formContact' => $form->createView()
+         ]);
      }
  
 }

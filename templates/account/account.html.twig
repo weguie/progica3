@@ -8,11 +8,21 @@
 <hr>
 
 <div style="align-items: center;">
+{% if disponibilites == null %}
+	<button type="button" class="btn btn-dark"><a href="{{path('contactDispo')}}" style="text-decoration: none; color: white;">Disponibilité</a></button>
+{% endif %}
 	<button type="button" class="btn btn-dark"><a href="{{path('create')}}" style="text-decoration: none; color: white;">Créer une nouvelle annonce</a></button>
-	<button type="button" class="btn btn-dark"><a href="/logout" style="text-decoration: none; color: white;">Log Out</a></button>
+	<button type="button" class="btn btn-dark"><a href="/logout" style="text-decoration: none; color: white;">Deconnexion</a></button>
 </div>
 
-<hr>
+<br>
+<h3>Vos disponibilités :</h3>
+{% if disponibilites != null %}	
+	<p>Le {{disponibilites.day}} de {{disponibilites.hourStart}}h à {{disponibilites.hourEnd}}h</p>
+{% else %}
+	<p>Vous n'avez pas encore rentré de disponibilité.</p>
+{% endif %}
+<br>
 
 <h3>Vos annonces : </h3>
 {% if gites != null %}
@@ -41,7 +51,7 @@
 	{% endfor %} 
 
 {% else %}
-	<p>Vous n'avez pas d'annonce</p>
+	<p>Vous n'avez pas d'annonce.</p>
 {% endif %}
 
 {% endblock %}
