@@ -7,6 +7,13 @@
 <h2 style="text-align: center;">Bonjour {{user.firstName}}</h2>
 <hr>
 
+<div style="align-items: center;">
+	<button type="button" class="btn btn-dark"><a href="{{path('create')}}" style="text-decoration: none; color: white;">Créer une nouvelle annonce</a></button>
+	<button type="button" class="btn btn-dark"><a href="/logout" style="text-decoration: none; color: white;">Log Out</a></button>
+</div>
+
+<hr>
+
 <h3>Vos annonces : </h3>
 {% if gites != null %}
 	{% for gite in gites %}
@@ -36,10 +43,5 @@
 {% else %}
 	<p>Vous n'avez pas d'annonce</p>
 {% endif %}
-
-<div style="align-items: center;">
-	<button type="button" class="btn btn-dark"><a href="{{path('create')}}" style="text-decoration: none; color: white;">Créer une nouvelle annonce</a></button>
-	<button type="button" class="btn btn-dark"><a href="/logout" style="text-decoration: none; color: white;">Log Out</a></button>
-</div>
 
 {% endblock %}

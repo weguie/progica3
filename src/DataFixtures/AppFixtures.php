@@ -11,10 +11,8 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 
-
 class AppFixtures extends Fixture
 {
-
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
@@ -24,7 +22,6 @@ class AppFixtures extends Fixture
         $insertedPKs = $populator->execute();
 
         for($i = 1; $i <= 2; $i++) {
-
             $user = new Utilisateur();
             $user->setEmail($faker->email())
                   ->setPassword('')
@@ -33,6 +30,7 @@ class AppFixtures extends Fixture
                   ->setLastName($faker->lastName())
                   ->setPhone($faker->phoneNumber());
             $manager->persist($user);
+
             for($j = 1; $j <= 100; $j++) {
             $gite = new Gite();
             $gite->setTitle($faker->word())
@@ -42,7 +40,7 @@ class AppFixtures extends Fixture
                 ->setIsAllowed(rand(0, 1))
                 ->setIsAllwoedPrice(rand(1 , 30))
                 ->setPrice(rand(100, 2000))
-                ->setCity($insertedPKs(rand(0,1000)))
+                ->setCity($insertedPKs[0][rand(0,1000)])
                 ->setBed(rand(0, 10))
                 ->setRoom(rand(0, 10));
             $manager->persist($gite);

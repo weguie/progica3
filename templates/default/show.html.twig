@@ -10,17 +10,23 @@
 				<strong class="d-inline-block mb-2 text-success">{{gite.city.name}}</strong>
 				<h3 class="mb-0">{{gite.title}}</h3>
 				<p>{{gite.price}}€ / jour</p>
+				{% if disponibility != null %}
+				<p>Disponible à partir du {{ disponibility.dateStart|format_datetime('short', 'none', locale='fr') }} jusqu'au {{ disponibility.dateEnd|format_datetime('short', 'none', locale='fr') }}</p>
+				{% endif %}
 				<p>{{gite.surface}}m²</p>
 				<p>Ce gîte dispose de {{gite.room}}
 					chambre(s) et de {{gite.bed}}
 					lit(s).</p>
 				<p>Description : {{gite.description}}</p>
-				<p>Contact : {{user.firstName}} {{user.lastName}}</p>
-				<p>Numéro de contact : {{user.phone}}</p>
+				<p>Contact : {{user.firstName}} {{user.lastName}} {{user.phone}}</p>
+				{% if contactDispo != null %}
+				<p>Disponibilité : {{contactDispo.day}} de {{contactDispo.hourStart}}h à {{contactDispo.hourEnd}}h</p>
+				{% endif %}
 				<p>Animaux autorisés : {{answer}}</p>
 				{% if gite.isAllowed == 1 %}
 				<p>{{gite.isAllwoedPrice}}€ / animal</p>
-				{% endif %}	
+				{% endif %}
+				
 			</div>
 			<div class="col-auto d-none d-lg-block">
 				<img src="{{gite.image}}" alt="" style="width:500px; height:400px">

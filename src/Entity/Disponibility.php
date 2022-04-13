@@ -8,8 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * Disponibility
  *
  * @ORM\Table(name="disponibility", uniqueConstraints={@ORM\UniqueConstraint(name="gite_id", columns={"gite_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\DisponibilityRepository")
  */
+
 class Disponibility
 {
     /**

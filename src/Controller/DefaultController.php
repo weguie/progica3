@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Disponibility;
+use App\Repository\DisponibilityRepository;
 use App\Entity\Option;
 use App\Repository\CitiesRepository;
+use App\Repository\ContactDisponibilityRepository;
 use App\Repository\GiteRepository;
+use App\Repository\OptionRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,12 +68,23 @@ class DefaultController extends AbstractController
     //Page pour avoir plus de précision sur une annonce
 
     #[Route('/show/{id}', name: 'show_house')]
-    public function show(GiteRepository $giteRepository, int $id): Response
+    public function show(GiteRepository $giteRepository, int $id, DisponibilityRepository $disponibilityRepository, ContactDisponibilityRepository $contactDisponibilityRepository, OptionRepository $optionRepository): Response
     {
         //Trouver le gîte avec cet Id
         $gite = $giteRepository->find($id);
+
         //Trouver utilisateur
         $user = $gite->getUser();
+
+        //Trouver la disponibilité
+        $disponibility = $disponibilityRepository->findOneBy(["gite" => $id]);
+
+        //Trouver les disponibilités du contact
+        $contactDisponibility = $contactDisponibilityRepository->findOneBy(["user" => $user]);
+
+        //Trouver les options 
+        // $option = $optionRepository->findOneBy(["gite" => $gite->getId()]);
+
         $pets = $gite->getIsAllowed();
 
         if ($pets == '1') {
@@ -82,6 +97,8 @@ class DefaultController extends AbstractController
             'gite' => $gite,
             'user' => $user,
             'answer' => $answer,
+            'disponibility' => $disponibility,
+            'contactDispo' => $contactDisponibility
         ]);
     }
 }

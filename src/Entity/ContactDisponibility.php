@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ContactDisponibility
  *
  * @ORM\Table(name="contact_disponibility", uniqueConstraints={@ORM\UniqueConstraint(name="user_id", columns={"user_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\ContactDisponibilityRepository")
  */
 class ContactDisponibility
 {

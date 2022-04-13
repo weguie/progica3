@@ -24,10 +24,9 @@ class SearchController extends AbstractController
 
         // Si le formulaire est rempli et valide 
         if ($searchForm->handleRequest($request)->isSubmitted() && $searchForm->isValid()){
-
+         
             //Récupération du formulaire
             $criteria = $searchForm->getData();
-
             //Recherche
             $gites = $giteRepository->searchGiteCity($criteria);
             // $gites = $giteRepository->searchGiteTitle($criteria);
